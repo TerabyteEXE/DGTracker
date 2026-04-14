@@ -3,13 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Title</title>
-    <!-- Other meta tags, styles, etc. -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>DG Tracker</title>
 </head>
-<body>
-    <!-- Your body content goes here -->
+<body class="bg-gray-100 flex flex-col min-h-screen">
+    <header class="bg-blue-600 p-4 text-white text-center">
+        <h1 class="text-2xl font-bold">DG Tracker Game Interface</h1>
+    </header>
 
-    <!-- External script reference -->
-    <script src="script.js"></script>
+    <main class="flex-1 p-4">
+        <section id="setup-view" class="hidden">
+            <h2 class="text-xl mb-2">Setup View</h2>
+            <form id="setup-form" class="bg-white p-4 rounded shadow">
+                <label class="block mb-2">
+                    Game Name:
+                    <input type="text" id="game-name" class="mt-1 block w-full p-2 border border-gray-300 rounded">
+                </label>
+                <button type="submit" class="mt-4 bg-green-500 text-white p-2 rounded">Start Game</button>
+            </form>
+        </section>
+
+        <section id="game-view" class="hidden">
+            <h2 class="text-xl mb-2">Game View</h2>
+            <div id="game-info" class="bg-white p-4 rounded shadow"></div>
+            <button id="end-game" class="mt-4 bg-red-500 text-white p-2 rounded">End Game</button>
+        </section>
+
+        <section id="summary-view" class="hidden">
+            <h2 class="text-xl mb-2">Summary View</h2>
+            <div id="summary-info" class="bg-white p-4 rounded shadow"></div>
+            <button id="restart-game" class="mt-4 bg-blue-500 text-white p-2 rounded">Restart Game</button>
+        </section>
+    </main>
+
+    <footer class="bg-blue-600 p-4 text-white text-center">
+        &copy; 2026 DG Tracker. All Rights Reserved.
+    </footer>
 </body>
 </html>
