@@ -10,6 +10,20 @@
         :root { --bg: #f2f2f0; --text: #000000; --border: #000000; }
         body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; }
         
+        /* THE RGB EFFECT - Only for the title */
+        .rgb-title {
+            text-shadow: 
+                -3px -1.5px 0px #ff0000, 
+                 3px  1.5px 0px #00ffff;
+            transition: text-shadow 0.15s ease-in-out;
+        }
+
+        .rgb-title:hover {
+            text-shadow: 
+                -5px -2px 0px #ff00ff, 
+                 5px  2px 0px #00ff00;
+        }
+
         .blocky-card { 
             background: white; 
             border: 4px solid var(--border); 
@@ -44,7 +58,7 @@
 <body class="p-8 md:p-20">
 
     <header class="max-w-4xl mx-auto mb-16 border-b-8 border-black pb-8">
-        <h1 class="text-6xl font-black tracking-tighter italic">TERABYTE_EXE</h1>
+        <h1 class="text-6xl font-black tracking-tighter italic rgb-title">TERABYTE_EXE</h1>
         <p class="font-mono uppercase tracking-[0.5em] opacity-60 mt-4">Utility Software Archive // v1.5.2</p>
     </header>
 
