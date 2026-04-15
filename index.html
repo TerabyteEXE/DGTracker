@@ -101,3 +101,22 @@
 
 </body>
 </html>
+<script>
+    // Check for saved theme or default to light
+    let currentTheme = localStorage.getItem('dg_theme') || 'light';
+
+    // Function to apply the theme to the HTML element
+    function applyTheme() {
+        document.documentElement.setAttribute('data-theme', currentTheme);
+    }
+
+    // Function to flip the theme and save it
+    function toggleTheme() {
+        currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+        localStorage.setItem('dg_theme', currentTheme);
+        applyTheme();
+    }
+
+    // Run on page load
+    applyTheme();
+</script>
