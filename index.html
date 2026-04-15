@@ -7,28 +7,43 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@900&family=JetBrains+Mono:wght@500;800&display=swap" rel="stylesheet">
     <style>
-        :root { --bg: #f2f2f0; --text: #000000; --border: #000000; }
-        body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; }
+        /* THEME VARIABLES */
+        :root { 
+            --bg: #f2f2f0; 
+            --card: #ffffff; 
+            --text: #000000; 
+            --border: #000000; 
+        }
+
+        [data-theme='dark'] { 
+            --bg: #111111; 
+            --card: #1a1a1a; 
+            --text: #ffffff; 
+            --border: #ffffff; 
+        }
+
+        body { 
+            background: var(--bg); 
+            color: var(--text); 
+            font-family: 'Inter', sans-serif; 
+            transition: background 0.2s, color 0.2s;
+        }
         
-        /* THE RGB EFFECT - Only for the title */
+        /* THE RGB EFFECT */
         .rgb-title {
-            text-shadow: 
-                -3px -1.5px 0px #ff0000, 
-                 3px  1.5px 0px #00ffff;
+            text-shadow: -3px -1.5px 0px #ff0000, 3px 1.5px 0px #00ffff;
             transition: text-shadow 0.15s ease-in-out;
         }
 
         .rgb-title:hover {
-            text-shadow: 
-                -5px -2px 0px #ff00ff, 
-                 5px  2px 0px #00ff00;
+            text-shadow: -5px -2px 0px #ff00ff, 5px 2px 0px #00ff00;
         }
 
         .blocky-card { 
-            background: white; 
+            background: var(--card); 
             border: 4px solid var(--border); 
             box-shadow: 8px 8px 0px var(--border);
-            transition: transform 0.1s, box-shadow 0.1s;
+            transition: all 0.1s;
         }
         
         .blocky-card:hover { 
@@ -56,21 +71,19 @@
     </style>
 </head>
 <body class="p-8 md:p-20">
-        <p class="font-mono uppercase tracking-[0.5em] opacity-60 mt-4">Utility Software Archive // v1.5.2</p>
-        <header class="max-w-4xl mx-auto mb-16 border-b-8 border-black pb-8 flex justify-between items-end">
-    <div>
-        <h1 class="text-6xl font-black tracking-tighter italic rgb-title">TERABYTE_EXE</h1>
-        <p class="font-mono uppercase tracking-[0.5em] opacity-60 mt-4">Utility Software Archive // v1.5.2</p>
-    </div>
-    <button onclick="toggleTheme()" class="btn-link !py-1 !px-3 text-[10px] mb-2">MODE</button>
-    </header>
+
+    <header class="max-w-4xl mx-auto mb-16 border-b-8 border-[var(--border)] pb-8 flex justify-between items-end">
+        <div>
+            <h1 class="text-6xl font-black tracking-tighter italic rgb-title">TERABYTE_EXE</h1>
+            <p class="font-mono uppercase tracking-[0.5em] opacity-60 mt-4 text-[10px] md:text-sm">Utility Software Archive // v1.5.2</p>
+        </div>
+        <button onclick="toggleTheme()" class="btn-link !py-1 !px-3 text-[10px] mb-2">MODE</button>
     </header>
 
     <main class="max-w-4xl mx-auto grid md:grid-cols-2 gap-12">
-        
         <div class="blocky-card p-8 flex flex-col justify-between">
             <div>
-                <span class="text-[10px] font-mono bg-black text-white px-2 py-1 uppercase">Stable</span>
+                <span class="text-[10px] font-mono bg-[var(--text)] text-[var(--bg)] px-2 py-1 uppercase">Stable</span>
                 <h2 class="text-3xl font-black mt-4 mb-2">DG_Trakr</h2>
                 <p class="text-sm opacity-70 mb-6">Beautiful disc golf score tracking.</p>
             </div>
@@ -79,41 +92,36 @@
 
         <div class="blocky-card p-8 flex flex-col justify-between">
             <div>
-                <span class="text-[10px] font-mono bg-black text-white px-2 py-1 uppercase">WIP</span>
+                <span class="text-[10px] font-mono bg-[var(--text)] text-[var(--bg)] px-2 py-1 uppercase">WIP</span>
                 <h2 class="text-3xl font-black mt-4 mb-2">Flipper</h2>
                 <p class="text-sm opacity-70 mb-6">Flip a coin.</p>
             </div>
             <a href="./flipper/flipper.html" class="btn-link">Initialize_Flip</a>
         </div>
 
-        <div class="blocky-card p-8 border-dashed opacity-50 flex items-center justify-center">
+        <div class="blocky-card p-8 border-dashed opacity-50 flex items-center justify-center border-[var(--border)]">
             <p class="font-mono text-sm uppercase">[ Slot Available ]</p>
         </div>
-
     </main>
 
     <footer class="max-w-4xl mx-auto mt-20 font-mono text-[10px] uppercase opacity-40">
         By Terabyte_EXE
     </footer>
 
+    <script>
+        let currentTheme = localStorage.getItem('dg_theme') || 'light';
+
+        function applyTheme() {
+            document.documentElement.setAttribute('data-theme', currentTheme);
+        }
+
+        function toggleTheme() {
+            currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+            localStorage.setItem('dg_theme', currentTheme);
+            applyTheme();
+        }
+
+        applyTheme();
+    </script>
 </body>
 </html>
-<script>
-    // Check for saved theme or default to light
-    let currentTheme = localStorage.getItem('dg_theme') || 'light';
-
-    // Function to apply the theme to the HTML element
-    function applyTheme() {
-        document.documentElement.setAttribute('data-theme', currentTheme);
-    }
-
-    // Function to flip the theme and save it
-    function toggleTheme() {
-        currentTheme = currentTheme === 'light' ? 'dark' : 'light';
-        localStorage.setItem('dg_theme', currentTheme);
-        applyTheme();
-    }
-
-    // Run on page load
-    applyTheme();
-</script>
