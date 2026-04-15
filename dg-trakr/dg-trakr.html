@@ -93,10 +93,14 @@
         let tempScore = 3; let tempPar = 3;
 
         function init() {
-            document.documentElement.setAttribute('data-theme', state.theme);
-            if (state.isFinished) { showView('summary-view'); renderSummary(); }
-            else if (state.isLive) { showView('game-view'); renderGame(); selectPlayer(state.activeIdx || 0); }
-            else { renderSetup(); }
+        // 1. Get the universal theme from localStorage
+          const savedTheme = localStorage.getItem('dg_theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    
+        // 2. Existing view logic
+        if (state.isFinished) { showView('summary-view'); renderSummary(); }
+        else if (state.isLive) { showView('game-view'); renderGame(); selectPlayer(state.activeIdx || 0); }
+        else { renderSetup(); }
         }
 
         function showView(id) { document.querySelectorAll('.view-step').forEach(v => v.classList.remove('active')); document.getElementById(id).classList.add('active'); }
@@ -164,7 +168,15 @@
             document.getElementById('final-standings').innerHTML = stats.sort((a,b) => a.rel - b.rel).map((s, i) => `<div class="flex justify-between font-mono text-sm py-1 border-b border-[var(--border)]"><span class="font-bold">${i + 1}. ${s.name}</span><span>${s.rel > 0 ? '+' : ''}${s.rel} (${s.total})</span></div>`).join('');
         }
         function editHole(pIdx, hIdx) { const val = prompt("Correct Strokes:", state.players[pIdx].scores[hIdx]); if (val && !isNaN(val)) { state.players[pIdx].scores[hIdx] = parseInt(val); save(); renderGame(); } }
-        function toggleTheme() { state.theme = state.theme === 'light' ? 'dark' : 'light'; init(); save(); }
+        function toggleTheme() {
+        // Flip the attribute on the document
+        const current = document.documentElement.getAttribute('data-theme');
+        const next = current === 'light' ? 'dark' : 'light';
+    
+        // Save to the universal key so Hub knows too
+        localStorage.setItem('dg_theme', next);
+        document.documentElement.setAttribute('data-theme', next);
+        }
         function resetApp() { if(confirm("ARCHIVE LEDGER?")) { localStorage.clear(); location.reload(); } }
         init();
     </script>
