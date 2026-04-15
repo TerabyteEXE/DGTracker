@@ -1,1 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flipper | Terabyte_EXE</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@900&family=JetBrains+Mono:wght@800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../dg-trakr/style.css"> <style>
+        .coin-spin { animation: spin 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        @keyframes spin {
+            0% { transform: scale(1) rotateY(0deg); }
+            50% { transform: scale(1.2) rotateY(180deg); }
+            100% { transform: scale(1) rotateY(360deg); }
+        }
+    </style>
+</head>
+<body class="p-6 md:p-16">
 
+    <header class="max-w-xl mx-auto mb-12 flex flex-col items-start border-b-4 border-[var(--border)] pb-6">
+        <a href="../index.html" class="btn-outline px-2 py-0.5 text-[9px] font-bold mb-4">← SYSTEM_HUB</a>
+        <h1 class="text-4xl font-black tracking-tighter uppercase">Coin_Flip</h1>
+    </header>
+
+    <main class="max-w-xl mx-auto space-y-10">
+        <div id="coin-container" class="blocky-card aspect-square flex items-center justify-center bg-white">
+            <div id="coin-visual" class="w-48 h-48 rounded-full border-8 border-black flex items-center justify-center">
+                <span id="coin-text" class="text-4xl font-black uppercase">READY</span>
+            </div>
+        </div>
+
+        <button onclick="flipCoin()" class="btn-solid w-full py-6 text-2xl shadow-[8px_8px_0px_#000]">FLIP_COIN</button>
+
+        <div class="blocky-card p-4">
+            <h3 class="text-[10px] font-bold uppercase opacity-40 mb-4">Flip_History</h3>
+            <div id="flip-history" class="flex gap-2 flex-wrap font-mono text-sm">
+                </div>
+        </div>
+    </main>
+
+    <script>
+        let history = [];
+
+        function flipCoin() {
+            const visual = document.getElementById('coin-visual');
+            const text = document.getElementById('coin-text');
+            const historyContainer = document.getElementById('flip-history');
+
+            // Trigger Animation
+            visual.classList.remove('coin-spin');
+            void visual.offsetWidth; // Force reflow
+            visual.classList.add('coin-spin');
+
+            text.innerText = "...";
+
+            setTimeout(() => {
+                const result = Math.random() > 0.5 ? 'HEADS' : 'TAILS';
+                text.innerText = result;
+                
+                // Add to history
+                history.unshift(result[0]); // Just 'H' or 'T'
+                if (history.length > 12) history.pop();
+                
+                historyContainer.innerHTML = history.map(item => 
+                    `<span class="border-2 border-black px-2 py-1 ${item === 'H' ? 'bg-black text-white' : ''}">${item}</span>`
+                ).join('');
+            }, 600);
+        }
+    </script>
+</body>
+</html>
